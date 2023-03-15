@@ -4,4 +4,4 @@
 
 ### Design:
 
- file:///home/dit/Downloads/Spotify%20Records.pdf
+ <a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here</a>
