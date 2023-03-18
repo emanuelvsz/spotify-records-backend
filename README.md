@@ -1,15 +1,51 @@
 # Spotify Records
 
-``O Spotify Records é uma wiki sobre todos os artistas da plataforma Spotify, lá, o usuário pode conectar-se com sua conta logada e após isso, serão qualificadas as informações mais diversas sobre seus artistas favoritos. Além disso, muitos outros artistas terão seu reconhecimento no site``
+<section name"summary" id="summary">
 
-### Design:
+## Summary
 
- <a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here</a>
+<ul>
+ <a href="#desc"><li>Description</li></a>
+ <a href="#prototype"><li>Prototype</li></a>
+ <a href="#author"><li>Author</li></a>
+
+</ul>
+
+</section>
+
+<section name"desc" id="desc">
+
+## Description:
+
+``Spotify Records`` is a wiki about all the artists on the Spotify platform, there, the user can connect with his Spotify Music account and after that, the most diverse information about his favorite artists will be shown. on the site, it is also possible to stay on top of news about your favorite artists, in addition to closely monitoring their upcoming presentations and releases
+
+The back-end of the project will be a REST API that will provide the database data for the front-end. The code is made of ``golang`` and using hexagonal architecture for better security and code organization.
+
+The front-end will be developed in ``React`` with some possible libraries to improve the performance and operation of the application
+
+</section>
  
- #### Home page
- <img width="530" alt="import-ova1" src="./img/home.jpeg">
+<section name"prototype" id="prototype">
+
+## Prototype:
  
- #### About the artist page
- <img width="530" alt="import-ova1" src="./img/about.jpeg">
+#### Home page
+<img src="https://user-images.githubusercontent.com/84058517/226115550-bb4d1f5b-7513-4dd5-ba9b-ef4421cfd424.png" width=560/>
+
+#### About the artist page
+
+<img src="https://user-images.githubusercontent.com/84058517/226115645-7ef8dfa4-8609-4d6e-aa05-56b3b9d3b8aa.png" width=560/>
+
+<a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here to see the design in a better resolution</a>
+
+</section>
+
+<section name"author" id="author">
+
+## Author
+
+<a href="https://github.com/emanuelvsz">@emanuelvsz</a>
  
-![image](https://user-images.githubusercontent.com/84058517/226115550-bb4d1f5b-7513-4dd5-ba9b-ef4421cfd424.png)
+</section>
+
+ 
