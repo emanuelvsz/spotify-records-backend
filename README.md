@@ -1,10 +1,8 @@
 # Spotify Records
 
-``Spotify Records is a wiki about all the artists on the Spotify platform, there, the user can connect with his Spotify Music account and after that, the most diverse information about his favorite artists will be shown. on the site, it is also possible to stay on top of news about your favorite artists, in addition to closely monitoring their upcoming presentations and releases``
-
 <section name"summary" id="summary">
 
-# Summary
+## Summary
 
 <ul>
  <a href="#desc"><li>Description</li></a>
@@ -18,6 +16,8 @@
 <section name"desc" id="desc">
 
 ## Description:
+
+``Spotify Records`` is a wiki about all the artists on the Spotify platform, there, the user can connect with his Spotify Music account and after that, the most diverse information about his favorite artists will be shown. on the site, it is also possible to stay on top of news about your favorite artists, in addition to closely monitoring their upcoming presentations and releases
 
 The back-end of the project will be a REST API that will provide the database data for the front-end. The code is made of ``golang`` and using hexagonal architecture for better security and code organization.
 
