@@ -42,7 +42,7 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 
 <section name"author" id="author">
 
-<a href="[github.com/emanuelvsz](https://github.com/emanuelvsz)">@emanuelvsz</a>
+<a href="https://github.com/emanuelvsz">@emanuelvsz</a>
  
 </section>
 
