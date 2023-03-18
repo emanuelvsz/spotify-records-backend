@@ -30,17 +30,19 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 ## Prototype:
  
 #### Home page
-<img src="https://user-images.githubusercontent.com/84058517/226115550-bb4d1f5b-7513-4dd5-ba9b-ef4421cfd424.png" width=700/>
+<img src="https://user-images.githubusercontent.com/84058517/226115550-bb4d1f5b-7513-4dd5-ba9b-ef4421cfd424.png" width=560/>
 
 #### About the artist page
 
-<img src="https://user-images.githubusercontent.com/84058517/226115645-7ef8dfa4-8609-4d6e-aa05-56b3b9d3b8aa.png" width=700/>
+<img src="https://user-images.githubusercontent.com/84058517/226115645-7ef8dfa4-8609-4d6e-aa05-56b3b9d3b8aa.png" width=560/>
 
 <a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here to see the design in a better resolution</a>
 
 </section>
 
 <section name"author" id="author">
+
+## Author
 
 <a href="https://github.com/emanuelvsz">@emanuelvsz</a>
  
