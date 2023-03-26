@@ -23,6 +23,7 @@ func (instance *builder) WithName(name string) *builder {
 			Description: messages.InvalidArtistName,
 		})
 	}
+
 	return instance
 }
 
@@ -30,5 +31,6 @@ func (instance *builder) Build() (*Artist, error) {
 	if len(instance.invalidFields) > 0 {
 		return nil, nil
 	}
+
 	return instance.artist, nil
 }

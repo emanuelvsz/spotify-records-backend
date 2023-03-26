@@ -1,9 +1,10 @@
 package artist
 
+import "github.com/google/uuid"
+
 type Artist struct {
-	Name    string
-	Age     int8
-	Address string
+	ID          uuid.UUID
+	Name        string
+	Age         int8
+	Nacionality string
 }
-
-
