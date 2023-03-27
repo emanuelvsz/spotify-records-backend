@@ -2,9 +2,11 @@ package repository
 
 import (
 	"module/src/core/domain/artist"
-	"module/src/core/errors"
+
+	"github.com/google/uuid"
 )
 
 type ArtistLoader interface {
-	FetchArtists() ([]artist.Artist, errors.Error)
+	FetchArtists() ([]artist.Artist, error)
+	FetchArtistByID(artistID uuid.UUID) (artist.Artist, error)
 }

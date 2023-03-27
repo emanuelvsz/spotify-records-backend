@@ -6,5 +6,5 @@ import (
 )
 
 type ArtistManager interface {
-	FetchArtists() ([]artist.Artist, errors.Error)
+	ListArtists() ([]artist.Artist, errors.Error)
 }

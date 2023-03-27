@@ -11,3 +11,7 @@ type ArtistHandlers struct {
 func (instance ArtistHandlers) ListArtists() error {
 	return nil
 }
+
+func NewArtistHandlers(service primary.ArtistManager) *ArtistHandlers {
+	return &ArtistHandlers{service: service}
+}
