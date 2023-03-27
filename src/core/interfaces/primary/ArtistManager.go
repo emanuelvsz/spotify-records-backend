@@ -1,10 +1,7 @@
 package primary
 
-import (
-	"module/src/core/domain/artist"
-	"module/src/core/errors"
-)
+import "github.com/labstack/echo/v4"
 
 type ArtistManager interface {
-	ListArtists() ([]artist.Artist, errors.Error)
+	ListArtists(context echo.Context) error
 }
