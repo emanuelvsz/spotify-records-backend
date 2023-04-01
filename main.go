@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	fmt.Println("Running API...")
 	e := echo.New()
 	fmt.Println("AAAAAAAAAAAA")
