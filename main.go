@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"module/src/api/dicontainer"
+	"module/src/app/api/dicontainer"
 
 	"github.com/labstack/echo/v4"
 )
