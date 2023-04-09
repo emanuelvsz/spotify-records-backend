@@ -45,7 +45,5 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 ## Author
 
 <a href="https://github.com/emanuelvsz">@emanuelvsz</a>
- 
-</section>
 
- 
+</section>
