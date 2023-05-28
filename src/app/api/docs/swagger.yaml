@@ -1,0 +1,15 @@
+basePath: /api
+info:
+  contact:
+    email: evs10@aluno.ifal.edu.br
+    name: DIT - IFAL
+  description: Gestão de projetos do DIT
+  title: SPOTIFY RECORDS API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  bearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

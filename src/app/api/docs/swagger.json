@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Gestão de projetos do DIT",
+        "title": "SPOTIFY RECORDS API",
+        "contact": {
+            "name": "DIT - IFAL",
+            "email": "evs10@aluno.ifal.edu.br"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api",
+    "paths": {},
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
