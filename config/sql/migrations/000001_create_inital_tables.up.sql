@@ -21,3 +21,22 @@ create table if not exists profile
     constraint fk_profile_user_account
         foreign key (user_id) references user_account (id)
 );
+
+-- Tabela principal para os artistas
+CREATE TABLE IF NOT EXISTS artist (
+    id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(64) NOT NULL
+);
+
+-- Tabela para armazenar os gêneros
+CREATE TABLE IF NOT EXISTS genre (
+    id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(64) NOT NULL
+);
+
+-- Tabela de junção entre artistas e gêneros
+CREATE TABLE IF NOT EXISTS artist_genre (
+    artist_id UUID NOT NULL REFERENCES artist (id),
+    genre_id UUID NOT NULL REFERENCES genre (id),
+    PRIMARY KEY (artist_id, genre_id)
+);

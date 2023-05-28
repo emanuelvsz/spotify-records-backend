@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Gestão de projetos do DIT",
+        "description": "Aplicação de artistas do spotify",
         "title": "SPOTIFY RECORDS API",
         "contact": {
             "name": "DIT - IFAL",

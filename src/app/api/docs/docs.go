@@ -126,9 +126,11 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/api",
 	Schemes:          []string{},
 	Title:            "SPOTIFY RECORDS API",
-	Description:      "Gestão de projetos do DIT",
+	Description:      "Aplicação de artistas do spotify",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {

@@ -26,7 +26,7 @@ info:
   contact:
     email: evs10@aluno.ifal.edu.br
     name: DIT - IFAL
-  description: Gestão de projetos do DIT
+  description: Aplicação de artistas do spotify
   title: SPOTIFY RECORDS API
   version: "1.0"
 paths:

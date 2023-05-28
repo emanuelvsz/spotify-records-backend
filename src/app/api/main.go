@@ -14,7 +14,7 @@ const defaultEnvFilePath = "./src/app/api/.env"
 // NewAPI
 // @title SPOTIFY RECORDS API
 // @version 1.0
-// @description Gestão de projetos do DIT
+// @description Aplicação de artistas do spotify
 // @contact.name DIT - IFAL
 // @contact.email evs10@aluno.ifal.edu.br
 // @BasePath /api
