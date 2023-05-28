@@ -6,20 +6,85 @@ package bridge
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/google/uuid"
 )
 
-type Profile struct {
-	ID         uuid.UUID
-	UserID     uuid.UUID
-	Name       string
-	PictureUrl sql.NullString
+type Account struct {
+	ID       uuid.UUID
+	RoleID   uuid.UUID
+	Name     string
+	Email    string
+	Hash     string
+	Password string
 }
 
-type UserAccount struct {
-	ID    uuid.UUID
-	Pwd   string
-	Hash  string
-	Email string
+type Album struct {
+	ID          uuid.UUID
+	Name        string
+	ArtistID    uuid.UUID
+	ReleaseDate time.Time
+}
+
+type AlbumGenre struct {
+	ID      uuid.UUID
+	AlbumID uuid.UUID
+	GenreID uuid.UUID
+}
+
+type Artist struct {
+	ID            uuid.UUID
+	SuperArtistID uuid.NullUUID
+	Name          string
+	Description   sql.NullString
+	FoundedAt     time.Time
+	TerminatedAt  sql.NullTime
+}
+
+type ArtistGenre struct {
+	ID       uuid.UUID
+	ArtistID uuid.UUID
+	GenreID  uuid.UUID
+}
+
+type FollowedArtist struct {
+	ID           uuid.UUID
+	ArtistID     uuid.UUID
+	AccountID    uuid.UUID
+	FollowedAt   time.Time
+	UnfollowedAt sql.NullTime
+}
+
+type Genre struct {
+	ID          uuid.UUID
+	Name        string
+	Description sql.NullString
+	CreatedAt   sql.NullTime
+}
+
+type Role struct {
+	ID   uuid.UUID
+	Name string
+	Code string
+}
+
+type Song struct {
+	ID          uuid.UUID
+	Name        string
+	ArtistID    uuid.UUID
+	AlbumID     uuid.NullUUID
+	ReleaseDate time.Time
+	Duration    int64
+}
+
+type SongArtist struct {
+	ArtistID uuid.UUID
+	SongID   uuid.UUID
+}
+
+type SongGenre struct {
+	ID      uuid.UUID
+	SongID  uuid.UUID
+	GenreID uuid.UUID
 }
