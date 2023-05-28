@@ -22,6 +22,8 @@ func (as *ArtistServices) FetchArtists() ([]a.Artist, errors.Error) {
 		return nil, err
 	}
 
+	
+
 	return artists, nil
 }
 

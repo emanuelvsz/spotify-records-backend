@@ -31,9 +31,10 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 		return getHttpHandledErrorResponse(context, fetchErr)
 	}
 
-	var artists response.ArtistDTO
+	var artists []response.ArtistDTO
 	for _, each := range artistsSlice {
-		artists = *response.NewArtistDTO(each.ID(), each.Name(), each.SuperArtistID(), each.Description(), each.FoundedAt(), each.TerminatedAt())
+		newArtist := *response.NewArtistDTO(each.ID(), each.Name(), each.SuperArtistID(), each.Description(), each.FoundedAt(), each.TerminatedAt())
+		artists = append(artists, newArtist)
 	}
 
 	return context.JSON(http.StatusOK, artists)

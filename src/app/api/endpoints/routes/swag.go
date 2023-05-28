@@ -7,6 +7,4 @@ import (
 
 func loadApiRoutes(group *echo.Group) {
 	group.GET("/*", echoSwagger.WrapHandler)
-
-	loadArtistRoutes(group)
 }

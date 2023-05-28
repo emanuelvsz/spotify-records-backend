@@ -55,17 +55,7 @@ func (b *Builder) WithTerminatedAt(terminatedAt *time.Time) *Builder {
 	return b
 }
 
-func (b *Builder) validateDates() {
-	if b.terminatedAt != nil && b.foundedAt.After(*b.terminatedAt) {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistFoundedAt,
-			Description: messages.ArtistFoundedAtErrMsg,
-		})
-	}
-}
-
 func (b *Builder) Build() (*Artist, errors.Error) {
-	b.validateDates()
 	if len(b.invalidFields) > 0 {
 		return nil, errors.NewValidationError(messages.ArtistBuildErr, b.invalidFields...)
 	}

@@ -9,7 +9,7 @@ import (
 type ArtistDTO struct {
 	ID            uuid.UUID   `json:"id"`
 	Name          string      `json:"name"`
-	SuperArtistID *uuid.UUID  `json:"superArtistId"`
+	SuperArtistID *uuid.UUID  `json:"superArtistId,omitempty"`
 	Description   *string     `json:"description"`
 	FoundedAt     time.Time   `json:"foundedAt"`
 	TerminatedAt  *time.Time  `json:"terminatedAt"`
