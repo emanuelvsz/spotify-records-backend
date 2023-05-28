@@ -11,6 +11,60 @@
     },
     "basePath": "/api",
     "paths": {
+        "/artists": {
+            "get": {
+                "description": "Rota que permite que se busque todos os artistas do banco",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rotas do usuário"
+                ],
+                "summary": "Buscar todos os artistas do banco",
+                "operationId": "GetArtists",
+                "responses": {
+                    "200": {
+                        "description": "Requisição realizada com sucesso.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.ArtistDTO"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso negado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Algum dado informado não pôde ser processado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro inesperado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "A base de dados não está disponível.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/login": {
             "post": {
                 "description": "Rota que permite que um usuário se autentique no sistema utilizando seu endereço de e-mail e senha.\n| E-mail              | Senha     | Função                                                            |\n|---------------------|-----------|-------------------------------------------------------------------|\n| admin@ifal.edu.br   | Test1234! | Usuário comum do sistema\t\t\t\t\t\t\t\t\t\t  |",
@@ -67,6 +121,29 @@
         }
     },
     "definitions": {
+        "response.ArtistDTO": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "foundedAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "superArtistId": {
+                    "type": "string"
+                },
+                "terminatedAt": {
+                    "type": "string"
+                }
+            }
+        },
         "response.ErrorMessage": {
             "type": "object",
             "properties": {

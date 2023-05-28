@@ -15,7 +15,15 @@ type ArtistServices struct {
 	logger           logger.Logger
 }
 
-func (as *ArtistServices) FetchArtists() ([]a.Artist, errors.Error)
+func (as *ArtistServices) FetchArtists() ([]a.Artist, errors.Error) {
+	artists, err := as.artistRepository.FindArtists()
+	if err != nil {
+		as.logger.Log(err)
+		return nil, err
+	}
+
+	return artists, nil
+}
 
 func NewArtistServices(artistRepository repository.ArtistLoader, logger logger.Logger) *ArtistServices {
 	return &ArtistServices{

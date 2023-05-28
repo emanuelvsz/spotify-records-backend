@@ -15,7 +15,6 @@ func serve(host string, port int) {
 	router.Use(middleware.Logger())
 	router.Use(middleware.Recover())
 	router.Use(getCORSSettings())
-	router.Use(middlewares.GuardMiddleware)
 
 	apiGroup := router.Group("/api")
 

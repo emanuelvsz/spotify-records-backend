@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"context"
-	"fmt"
 	a "module/src/core/domain/artist"
 	"module/src/core/errors"
 	"module/src/core/interfaces/repository"
@@ -30,11 +29,21 @@ func (ap *ArtistPostgresRepository) FindArtists() ([]a.Artist, errors.Error) {
 		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, fetchErr)
 	}
 
+	artists := make([]a.Artist, 0)
 	for _, each := range artistRows {
-		fmt.Println(each)
+		artistBuilder := a.NewBuilder()
+		artistBuilder.WithID(each.ID).WithName(each.Name).WithSuperArtistID(each.SuperArtistID.UUID)
+		artistBuilder.WithDescription(each.Description.String).WithFoundedAt(each.FoundedAt).WithTerminatedAt(&each.TerminatedAt.Time)
+	
+		newArtist, createErr := artistBuilder.Build()
+		if createErr != nil {
+			return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createErr)
+		}
+
+		artists = append(artists, *newArtist)
 	}
 
-	return nil, nil
+	return artists, nil
 }
 
 func NewArtistPostgresRepository(manager connectorManager) *ArtistPostgresRepository {
