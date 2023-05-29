@@ -11,4 +11,5 @@ import (
 type ArtistManager interface {
 	FetchArtists() ([]artist.Artist, errors.Error)
 	FetchArtistSongs(artistID uuid.UUID) ([]song.Song, errors.Error)
+	FetchArtistInformation(artistID uuid.UUID) (*artist.Artist, errors.Error)
 }
