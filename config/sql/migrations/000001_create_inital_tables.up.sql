@@ -59,7 +59,7 @@ create table if not exists song
     name            varchar(64) not null,
     album_id        uuid        null,
     release_date    date        not null,
-    duration        interval    not null,
+    duration        text        not null,
 
     constraint fk_song_album_id
         foreign key (album_id) references album (id)

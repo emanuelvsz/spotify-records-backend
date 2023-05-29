@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"module/src/app/api/endpoints/handlers/converters"
 	"module/src/app/api/endpoints/handlers/dtos/response"
 	"module/src/core/interfaces/primary"
+	"module/src/core/messages"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -12,6 +14,10 @@ import (
 type ArtistHandlers struct {
 	service primary.ArtistManager
 }
+
+const (
+	artistID = "artistID"
+)
 
 // GetArtists
 // @ID GetArtists
@@ -44,6 +50,41 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 	}
 
 	return context.JSON(http.StatusOK, artists)
+}
+
+// GetArtistSongs
+// @ID GetArtistSongs
+// @Summary Buscar todas as músicas de um artista específico
+// @Tags Rotas do usuário
+// @Description Rota que permite que se busque todas as músicas de um artista
+// @Param artistID path string true "ID da organização." default(cfd8b073-a303-4886-836a-f249e88be9bc)
+// @Produce json
+// @Success 200 {array} response.SongDTO "Requisição realizada com sucesso."
+// @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
+// @Failure 403 {object} response.ErrorMessage "Acesso negado."
+// @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
+// @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
+// @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
+// @Router /artists/{artistID}/songs [get]
+func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
+	artistID, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
+		messages.ArtistIDInvalidErrMsg, messages.ConversionErrorMessage)
+	if conversionErr != nil {
+		return getHttpHandledErrorResponse(context, conversionErr)
+	}
+
+	songsRow, fetchErr := h.service.FetchArtistSongs(*artistID)
+	if fetchErr != nil {
+		return getHttpHandledErrorResponse(context, fetchErr)
+	}
+
+	var songs []response.SongDTO
+	for _, each := range songsRow {
+		songBuilder := response.NewSongDTO(each.ID(), each.Name(), each.ArtistID(), each.AlbumID(), each.ReleaseDate(), each.Duration())
+		songs = append(songs, *songBuilder)
+	}
+
+	return context.JSON(http.StatusOK, songs)
 }
 
 func NewArtistHandlers(service primary.ArtistManager) *ArtistHandlers {

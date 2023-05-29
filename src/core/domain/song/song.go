@@ -12,7 +12,7 @@ type Song struct {
 	artistID    uuid.UUID
 	albumID     *uuid.UUID
 	releaseDate time.Time
-	duration    float32
+	duration    string
 }
 
 func (s Song) ID() uuid.UUID {
@@ -35,6 +35,6 @@ func (s Song) ReleaseDate() time.Time {
 	return s.releaseDate
 }
 
-func (s Song) Duration() float32 {
+func (s Song) Duration() string {
 	return s.duration
 }

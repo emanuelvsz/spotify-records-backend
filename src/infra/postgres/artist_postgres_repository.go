@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	a "module/src/core/domain/artist"
+	s "module/src/core/domain/song"
 	"module/src/core/errors"
 	"module/src/core/interfaces/repository"
 	"module/src/core/messages"
@@ -25,7 +26,6 @@ func (ap *ArtistPostgresRepository) FindArtists() ([]a.Artist, errors.Error) {
 	defer ap.closeConnection(conn)
 
 	query := bridge.New(conn)
-
 	artistRows, fetchErr := query.SelectArtists(context.Background())
 	if fetchErr != nil {
 		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, fetchErr)
@@ -51,6 +51,36 @@ func (ap *ArtistPostgresRepository) FindArtists() ([]a.Artist, errors.Error) {
 		}
 
 		artists = append(artists, *newArtist)
+	}
+
+	return artists, nil
+}
+
+func (ap *ArtistPostgresRepository) FindArtistSongs(artistID uuid.UUID) ([]s.Song, errors.Error) {
+	conn, err := ap.getConnection()
+	if err != nil {
+		return nil, errors.NewUnexpectedError(messages.DataSourceUnavailableErrorMessage, err)
+	}
+	defer ap.closeConnection(conn)
+
+	query := bridge.New(conn)
+	songsRow, fetchErr := query.SelectArtistSongs(context.Background(), artistID)
+	if fetchErr != nil {
+		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, fetchErr)
+	}
+
+	artists := make([]s.Song, 0)
+	for _, each := range songsRow {
+		songBuilder := s.NewBuilder()
+		songBuilder.WithID(each.ID).WithName(each.Name).WithAlbumID(&each.AlbumID.UUID)
+		songBuilder.WithReleaseDate(each.ReleaseDate).WithDuration(each.Duration).WithArtistID(each.ArtistID)
+
+		newSong, createErr := songBuilder.Build()
+		if createErr != nil {
+			return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createErr)
+		}
+
+		artists = append(artists, *newSong)
 	}
 
 	return artists, nil

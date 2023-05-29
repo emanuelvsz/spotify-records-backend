@@ -13,6 +13,57 @@ import (
 	"github.com/google/uuid"
 )
 
+const selectArtistSongs = `-- name: SelectArtistSongs :many
+select s.id as id,
+    s.name as name,
+    s.album_id as album_id,
+    s.release_date as release_date,
+    s.duration as duration,
+    sa.artist_id as artist_id
+        from song s
+    inner join song_artist sa on sa.song_id = s.id
+    where sa.artist_id = $1
+`
+
+type SelectArtistSongsRow struct {
+	ID          uuid.UUID
+	Name        string
+	AlbumID     uuid.NullUUID
+	ReleaseDate time.Time
+	Duration    string
+	ArtistID    uuid.UUID
+}
+
+func (q *Queries) SelectArtistSongs(ctx context.Context, artistID uuid.UUID) ([]SelectArtistSongsRow, error) {
+	rows, err := q.db.QueryContext(ctx, selectArtistSongs, artistID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SelectArtistSongsRow
+	for rows.Next() {
+		var i SelectArtistSongsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.AlbumID,
+			&i.ReleaseDate,
+			&i.Duration,
+			&i.ArtistID,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const selectArtists = `-- name: SelectArtists :many
 select a.id as id,
     a.name as name,

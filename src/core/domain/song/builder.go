@@ -66,8 +66,8 @@ func (b *Builder) WithReleaseDate(releaseDate time.Time) *Builder {
 	return b
 }
 
-func (b *Builder) WithDuration(duration float32) *Builder {
-	if duration <= 0 {
+func (b *Builder) WithDuration(duration string) *Builder {
+	if duration == "" {
 		b.invalidFields = append(b.invalidFields, errors.InvalidField{
 			Name:        messages.SongDuration,
 			Description: messages.SongDurationInvalidErrMsg,

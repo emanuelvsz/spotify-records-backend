@@ -72,10 +72,9 @@ type Role struct {
 type Song struct {
 	ID          uuid.UUID
 	Name        string
-	ArtistID    uuid.UUID
 	AlbumID     uuid.NullUUID
 	ReleaseDate time.Time
-	Duration    int64
+	Duration    string
 }
 
 type SongArtist struct {
