@@ -34,3 +34,14 @@ select a.id as id,
     inner join genre g on g.id = ag.genre_id
     where a.id = @artist_id;
 
+-- name: SelectSubArtists :many
+select a.id as id,
+    a.name as name,
+    a.super_artist_id as super_artist_id,
+    a.description as description,
+    a.founded_at as founded_at,
+    a.terminated_at as terminated_at
+        from artist a
+    where a.super_artist_id = @super_artist_id
+    order by a.name;
+

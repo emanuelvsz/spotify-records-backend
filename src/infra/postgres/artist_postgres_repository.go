@@ -35,16 +35,42 @@ func (ap *ArtistPostgresRepository) FindArtists() ([]a.Artist, errors.Error) {
 	for _, each := range artistRows {
 		artistBuilder := a.NewBuilder()
 		artistBuilder.WithID(each.ID).WithName(each.Name)
+		artistBuilder.WithDescription(each.Description.String).WithFoundedAt(each.FoundedAt)
+		artistBuilder.WithTerminatedAt(&each.TerminatedAt.Time)
 
+		var superArtistID uuid.UUID
 		if each.SuperArtistID.Valid {
-			superArtistID := each.SuperArtistID.UUID
+			superArtistID = each.SuperArtistID.UUID
 			artistBuilder.WithSuperArtistID(superArtistID)
 		} else {
 			artistBuilder.WithSuperArtistID(uuid.Nil)
 		}
 
-		artistBuilder.WithDescription(each.Description.String).WithFoundedAt(each.FoundedAt).WithTerminatedAt(&each.TerminatedAt.Time)
+		superID := uuid.NullUUID{
+			UUID:  each.ID,
+			Valid: true,
+		}
 
+		subArtistRows, fetchSubArtistErr := query.SelectSubArtists(context.Background(), superID)
+		if fetchSubArtistErr != nil {
+			return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, fetchSubArtistErr)
+		}
+
+		var subArtist []a.Artist
+		for _, j := range subArtistRows {
+			subArtistBuilder := a.NewBuilder()
+			subArtistBuilder.WithID(j.ID).WithName(j.Name).WithDescription(j.Description.String)
+			subArtistBuilder.WithFoundedAt(j.FoundedAt).WithTerminatedAt(&j.TerminatedAt.Time)
+
+			newSubArtist, createSubArtistErr := subArtistBuilder.Build()
+			if createSubArtistErr != nil {
+				return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createSubArtistErr)
+			}
+
+			subArtist = append(subArtist, *newSubArtist)
+		}
+
+		artistBuilder.WithSubArtists(subArtist)
 		newArtist, createErr := artistBuilder.Build()
 		if createErr != nil {
 			return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createErr)

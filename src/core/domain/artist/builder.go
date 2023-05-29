@@ -55,6 +55,11 @@ func (b *Builder) WithTerminatedAt(terminatedAt *time.Time) *Builder {
 	return b
 }
 
+func (b *Builder) WithSubArtists(subArtists []Artist) *Builder {
+	b.subArtists = subArtists
+	return b
+}
+
 func (b *Builder) Build() (*Artist, errors.Error) {
 	if len(b.invalidFields) > 0 {
 		return nil, errors.NewValidationError(messages.ArtistBuildErr, b.invalidFields...)

@@ -269,6 +269,12 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.ArtistDTO"
+                    }
+                },
                 "name": {
                     "type": "string"
                 },
