@@ -10,6 +10,10 @@ func GetAuthServices() primary.AuthManager {
 	return services.NewAuthServices(GetAuthRepository(), GetLogger())
 }
 
+func GetArtistServices() primary.ArtistManager {
+	return services.NewArtistServices(GetArtistRepository(), GetLogger())
+}
+
 func GetLogger() logger.Logger {
 	return logger.New()
 }
