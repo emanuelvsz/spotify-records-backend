@@ -57,13 +57,10 @@ create table if not exists song
         constraint pk_song_id primary key
         constraint df_song_id default uuid_generate_v4(),
     name            varchar(64) not null,
-    artist_id       uuid        not null,
     album_id        uuid        null,
     release_date    date        not null,
     duration        interval    not null,
 
-    constraint fk_song_artist_id
-        foreign key (artist_id) references artist (id),
     constraint fk_song_album_id
         foreign key (album_id) references album (id)
 );
