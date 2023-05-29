@@ -11,4 +11,5 @@ import (
 type ArtistLoader interface {
 	FindArtists() ([]artist.Artist, errors.Error)
 	FindArtistSongs(artistID uuid.UUID) ([]song.Song, errors.Error)
+	FindArtistInformation(artistID uuid.UUID) (*artist.Artist, errors.Error)
 }

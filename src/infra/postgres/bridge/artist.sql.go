@@ -13,6 +13,51 @@ import (
 	"github.com/google/uuid"
 )
 
+const selectArtistByID = `-- name: SelectArtistByID :one
+select a.id as id,
+    a.name as name,
+    a.super_artist_id as super_artist_id,
+    a.description as description,
+    a.founded_at as founded_at,
+    a.terminated_at as terminated_at,
+    g.name as genre_name,
+    g.description as genre_description,
+    g.created_at as genre_created_at
+        from artist a
+    inner join artist_genre ag on a.id = ag.artist_id
+    inner join genre g on g.id = ag.genre_id
+    where a.id = $1
+`
+
+type SelectArtistByIDRow struct {
+	ID               uuid.UUID
+	Name             string
+	SuperArtistID    uuid.NullUUID
+	Description      sql.NullString
+	FoundedAt        time.Time
+	TerminatedAt     sql.NullTime
+	GenreName        string
+	GenreDescription sql.NullString
+	GenreCreatedAt   sql.NullTime
+}
+
+func (q *Queries) SelectArtistByID(ctx context.Context, artistID uuid.UUID) (SelectArtistByIDRow, error) {
+	row := q.db.QueryRowContext(ctx, selectArtistByID, artistID)
+	var i SelectArtistByIDRow
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.SuperArtistID,
+		&i.Description,
+		&i.FoundedAt,
+		&i.TerminatedAt,
+		&i.GenreName,
+		&i.GenreDescription,
+		&i.GenreCreatedAt,
+	)
+	return i, err
+}
+
 const selectArtistSongs = `-- name: SelectArtistSongs :many
 select s.id as id,
     s.name as name,
@@ -70,7 +115,7 @@ select a.id as id,
     a.super_artist_id as super_artist_id,
     a.description as description,
     a.founded_at as founded_at,
-    terminated_at as terminated_at 
+    a.terminated_at as terminated_at 
         from artist a
     order by a.name
 `

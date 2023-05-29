@@ -86,6 +86,29 @@ func (ap *ArtistPostgresRepository) FindArtistSongs(artistID uuid.UUID) ([]s.Son
 	return artists, nil
 }
 
+func (ap *ArtistPostgresRepository) FindArtistInformation(artistID uuid.UUID) (*a.Artist, errors.Error) {
+	conn, err := ap.getConnection()
+	if err != nil {
+		return nil, errors.NewUnexpectedError(messages.DataSourceUnavailableErrorMessage, err)
+	}
+	defer ap.closeConnection(conn)
+
+	query := bridge.New(conn)
+	artistRow, fetchErr := query.SelectArtistByID(context.Background(), artistID)
+	if fetchErr != nil {
+		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, fetchErr)
+	}
+
+	artistBuilder := a.NewBuilder()
+	artistBuilder.WithID(artistRow.ID).WithName(artistRow.Name)
+	newArtist, createErr := artistBuilder.Build()
+	if createErr != nil {
+		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createErr)
+	}
+
+	return newArtist, nil
+}
+
 func NewArtistPostgresRepository(manager connectorManager) *ArtistPostgresRepository {
 	return &ArtistPostgresRepository{manager}
 }

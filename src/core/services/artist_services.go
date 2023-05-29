@@ -38,6 +38,16 @@ func (as *ArtistServices) FetchArtistSongs(artistID uuid.UUID) ([]song.Song, err
 	return songs, nil
 }
 
+func (as *ArtistServices) FetchArtistInformation(artistID uuid.UUID) (*a.Artist, errors.Error) {
+	artist, err := as.artistRepository.FindArtistInformation(artistID)
+	if err != nil {
+		as.logger.Log(err)
+		return nil, err
+	}
+
+	return artist, nil
+}
+
 func NewArtistServices(artistRepository repository.ArtistLoader, logger logger.Logger) *ArtistServices {
 	return &ArtistServices{
 		artistRepository: artistRepository,
