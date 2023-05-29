@@ -57,7 +57,7 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 // @Summary Buscar todas as músicas de um artista específico
 // @Tags Rotas do usuário
 // @Description Rota que permite que se busque todas as músicas de um artista
-// @Param artistID path string true "ID da organização." default(cfd8b073-a303-4886-836a-f249e88be9bc)
+// @Param artistID path string true "ID do artista." default(cfd8b073-a303-4886-836a-f249e88be9bc)
 // @Produce json
 // @Success 200 {array} response.SongDTO "Requisição realizada com sucesso."
 // @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
@@ -85,6 +85,36 @@ func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
 	}
 
 	return context.JSON(http.StatusOK, songs)
+}
+
+// GetArtistInformation
+// @ID GetArtistInformation
+// @Summary Buscar os dados de um artista por id
+// @Tags Rotas do usuário
+// @Description Rota que permite que se busque as informações de um artista
+// @Param artistID path string true "ID do artista." default(cfd8b073-a303-4886-836a-f249e88be9bc)
+// @Produce json
+// @Success 200 {array} response.ArtistDTO "Requisição realizada com sucesso."
+// @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
+// @Failure 403 {object} response.ErrorMessage "Acesso negado."
+// @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
+// @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
+// @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
+// @Router /artists/{artistID} [get]
+func (h ArtistHandlers) GetArtistInformation(context echo.Context) error {
+	artistID, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
+		messages.ArtistIDInvalidErrMsg, messages.ConversionErrorMessage)
+	if conversionErr != nil {
+		return getHttpHandledErrorResponse(context, conversionErr)
+	}
+
+	artist, fetchErr := h.service.FetchArtistInformation(*artistID)
+	if fetchErr != nil {
+		return getHttpHandledErrorResponse(context, fetchErr)
+	}
+	artistDTO := response.NewArtistDTO(artist.ID(), artist.Name(), artist.SuperArtistID(), artist.Description(), artist.FoundedAt(), artist.TerminatedAt())
+
+	return context.JSON(http.StatusOK, artistDTO)
 }
 
 func NewArtistHandlers(service primary.ArtistManager) *ArtistHandlers {

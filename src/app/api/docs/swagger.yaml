@@ -96,13 +96,56 @@ paths:
       summary: Buscar todos os artistas do banco
       tags:
       - Rotas do usuário
+  /artists/{artistID}:
+    get:
+      description: Rota que permite que se busque as informações de um artista
+      operationId: GetArtistInformation
+      parameters:
+      - default: cfd8b073-a303-4886-836a-f249e88be9bc
+        description: ID do artista.
+        in: path
+        name: artistID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Requisição realizada com sucesso.
+          schema:
+            items:
+              $ref: '#/definitions/response.ArtistDTO'
+            type: array
+        "401":
+          description: Usuário não autorizado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "403":
+          description: Acesso negado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "422":
+          description: Algum dado informado não pôde ser processado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "500":
+          description: Ocorreu um erro inesperado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "503":
+          description: A base de dados não está disponível.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+      summary: Buscar os dados de um artista por id
+      tags:
+      - Rotas do usuário
   /artists/{artistID}/songs:
     get:
       description: Rota que permite que se busque todas as músicas de um artista
       operationId: GetArtistSongs
       parameters:
       - default: cfd8b073-a303-4886-836a-f249e88be9bc
-        description: ID da organização.
+        description: ID do artista.
         in: path
         name: artistID
         required: true

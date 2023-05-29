@@ -101,8 +101,12 @@ func (ap *ArtistPostgresRepository) FindArtistInformation(artistID uuid.UUID) (*
 
 	artistBuilder := a.NewBuilder()
 	artistBuilder.WithID(artistRow.ID).WithName(artistRow.Name)
+	newArtist, createErr := artistBuilder.Build()
+	if createErr != nil {
+		return nil, errors.NewUnexpectedError(messages.FetchingDataErrorMessage, createErr)
+	}
 
-	return nil, nil
+	return newArtist, nil
 }
 
 func NewArtistPostgresRepository(manager connectorManager) *ArtistPostgresRepository {
