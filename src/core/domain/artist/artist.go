@@ -13,6 +13,7 @@ type Artist struct {
 	description   *string
 	foundedAt     time.Time
 	terminatedAt  *time.Time
+	subArtists    []Artist
 }
 
 func (a Artist) ID() uuid.UUID {
@@ -37,4 +38,8 @@ func (a Artist) FoundedAt() time.Time {
 
 func (a Artist) TerminatedAt() *time.Time {
 	return a.terminatedAt
+}
+
+func (a Artist) SubArtists() []Artist {
+	return a.subArtists
 }

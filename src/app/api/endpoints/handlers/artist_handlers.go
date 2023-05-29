@@ -45,7 +45,13 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 			superArtistID = nil
 		}
 
-		newArtist := *response.NewArtistDTO(each.ID(), each.Name(), superArtistID, each.Description(), each.FoundedAt(), each.TerminatedAt())
+		subArtists := make([]response.ArtistDTO, 0)
+		for _, j := range each.SubArtists() {
+			newSubArtist := *response.NewArtistDTO(j.ID(), j.Name(), j.SuperArtistID(), j.Description(), j.FoundedAt(), each.TerminatedAt(), nil)
+			subArtists = append(subArtists, newSubArtist)
+		}
+
+		newArtist := *response.NewArtistDTO(each.ID(), each.Name(), superArtistID, each.Description(), each.FoundedAt(), each.TerminatedAt(), subArtists)
 		artists = append(artists, newArtist)
 	}
 
@@ -112,7 +118,7 @@ func (h ArtistHandlers) GetArtistInformation(context echo.Context) error {
 	if fetchErr != nil {
 		return getHttpHandledErrorResponse(context, fetchErr)
 	}
-	artistDTO := response.NewArtistDTO(artist.ID(), artist.Name(), artist.SuperArtistID(), artist.Description(), artist.FoundedAt(), artist.TerminatedAt())
+	artistDTO := response.NewArtistDTO(artist.ID(), artist.Name(), artist.SuperArtistID(), artist.Description(), artist.FoundedAt(), artist.TerminatedAt(), nil)
 
 	return context.JSON(http.StatusOK, artistDTO)
 }

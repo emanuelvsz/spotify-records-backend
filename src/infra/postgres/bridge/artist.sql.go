@@ -158,3 +158,54 @@ func (q *Queries) SelectArtists(ctx context.Context) ([]SelectArtistsRow, error)
 	}
 	return items, nil
 }
+
+const selectSubArtists = `-- name: SelectSubArtists :many
+select a.id as id,
+    a.name as name,
+    a.super_artist_id as super_artist_id,
+    a.description as description,
+    a.founded_at as founded_at,
+    a.terminated_at as terminated_at
+        from artist a
+    where a.super_artist_id = $1
+    order by a.name
+`
+
+type SelectSubArtistsRow struct {
+	ID            uuid.UUID
+	Name          string
+	SuperArtistID uuid.NullUUID
+	Description   sql.NullString
+	FoundedAt     time.Time
+	TerminatedAt  sql.NullTime
+}
+
+func (q *Queries) SelectSubArtists(ctx context.Context, superArtistID uuid.NullUUID) ([]SelectSubArtistsRow, error) {
+	rows, err := q.db.QueryContext(ctx, selectSubArtists, superArtistID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SelectSubArtistsRow
+	for rows.Next() {
+		var i SelectSubArtistsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.SuperArtistID,
+			&i.Description,
+			&i.FoundedAt,
+			&i.TerminatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
