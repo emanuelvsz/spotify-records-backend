@@ -5,6 +5,7 @@ import (
 	"module/src/core/interfaces/primary"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
@@ -33,7 +34,12 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 
 	var artists []response.ArtistDTO
 	for _, each := range artistsSlice {
-		newArtist := *response.NewArtistDTO(each.ID(), each.Name(), each.SuperArtistID(), each.Description(), each.FoundedAt(), each.TerminatedAt())
+		superArtistID := each.SuperArtistID()
+		if *each.SuperArtistID() == uuid.Nil {
+			superArtistID = nil
+		}
+
+		newArtist := *response.NewArtistDTO(each.ID(), each.Name(), superArtistID, each.Description(), each.FoundedAt(), each.TerminatedAt())
 		artists = append(artists, newArtist)
 	}
 

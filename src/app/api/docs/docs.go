@@ -135,7 +135,7 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
-                "foundedAt": {
+                "founded_at": {
                     "type": "string"
                 },
                 "id": {
@@ -144,10 +144,10 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "superArtistId": {
+                "super_artist_id": {
                     "type": "string"
                 },
-                "terminatedAt": {
+                "terminated_at": {
                     "type": "string"
                 }
             }

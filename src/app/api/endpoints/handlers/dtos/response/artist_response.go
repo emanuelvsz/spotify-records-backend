@@ -7,12 +7,12 @@ import (
 )
 
 type ArtistDTO struct {
-	ID            uuid.UUID   `json:"id"`
-	Name          string      `json:"name"`
-	SuperArtistID *uuid.UUID  `json:"superArtistId,omitempty"`
-	Description   *string     `json:"description"`
-	FoundedAt     time.Time   `json:"foundedAt"`
-	TerminatedAt  *time.Time  `json:"terminatedAt"`
+	ID            uuid.UUID  `json:"id"`
+	Name          string     `json:"name"`
+	SuperArtistID *uuid.UUID `json:"super_artist_id,omitempty"`
+	Description   *string    `json:"description"`
+	FoundedAt     time.Time  `json:"founded_at"`
+	TerminatedAt  *time.Time `json:"terminated_at"`
 }
 
 func NewArtistDTO(id uuid.UUID, name string, superArtistID *uuid.UUID, description *string, foundedAt time.Time, terminatedAt *time.Time) *ArtistDTO {
