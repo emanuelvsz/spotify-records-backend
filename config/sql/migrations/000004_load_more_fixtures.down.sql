@@ -1,1 +1,3 @@
-truncate table country cascade;
+truncate table genre,
+    song_artist,
+    artist_genre cascade;
