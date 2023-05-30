@@ -11,6 +11,8 @@ type Album struct {
 	name        string
 	artistID    uuid.UUID
 	releaseDate time.Time
+	description *string
+	imageURL    string
 }
 
 func (a Album) ID() uuid.UUID {
@@ -27,4 +29,12 @@ func (a Album) ArtistID() uuid.UUID {
 
 func (a Album) ReleaseDate() time.Time {
 	return a.releaseDate
+}
+
+func (a Album) Description() *string {
+	return a.description
+}
+
+func (a Album) ImageURL() string {
+	return a.imageURL
 }

@@ -13,7 +13,11 @@ type Song struct {
 	albumID     *uuid.UUID
 	releaseDate time.Time
 	duration    string
+	lyrics      *string
+	trackNumber *int
+	spotifyURL  string
 }
+
 
 func (s Song) ID() uuid.UUID {
 	return s.id
@@ -37,4 +41,16 @@ func (s Song) ReleaseDate() time.Time {
 
 func (s Song) Duration() string {
 	return s.duration
+}
+
+func (s Song) Lyrics() *string {
+	return s.lyrics
+}
+
+func (s Song) TrackNumber() *int {
+	return s.trackNumber
+}
+
+func (s Song) SpotifyURL() string {
+	return s.spotifyURL
 }

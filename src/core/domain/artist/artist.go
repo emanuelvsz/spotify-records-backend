@@ -7,13 +7,17 @@ import (
 )
 
 type Artist struct {
-	id            uuid.UUID
-	name          string
-	superArtistID *uuid.UUID
-	description   *string
-	foundedAt     time.Time
-	terminatedAt  *time.Time
-	subArtists    []Artist
+	id              uuid.UUID
+	name            string
+	superArtistID   *uuid.UUID
+	description     *string
+	foundedAt       time.Time
+	terminatedAt    *time.Time
+	subArtists      []Artist
+	imageURL        *string
+	recordCompanyID *uuid.UUID
+	countryID       *uuid.UUID
+	spotifyURL      string
 }
 
 func (a Artist) ID() uuid.UUID {
@@ -42,4 +46,20 @@ func (a Artist) TerminatedAt() *time.Time {
 
 func (a Artist) SubArtists() []Artist {
 	return a.subArtists
+}
+
+func (a Artist) ImageURL() *string {
+	return a.imageURL
+}
+
+func (a Artist) RecordCompanyID() *uuid.UUID {
+	return a.recordCompanyID
+}
+
+func (a Artist) CountryID() *uuid.UUID {
+	return a.countryID
+}
+
+func (a Artist) SpotifyURL() string {
+	return a.spotifyURL
 }

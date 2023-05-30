@@ -25,7 +25,7 @@ func (b *Builder) WithID(id uuid.UUID) *Builder {
 }
 
 func (b *Builder) WithName(name string) *Builder {
-	if len(name) == 0 {
+	if name == "" {
 		b.invalidFields = append(b.invalidFields, errors.InvalidField{
 			Name:        messages.AlbumName,
 			Description: messages.AlbumNameInvalidErrMsg,
@@ -54,6 +54,28 @@ func (b *Builder) WithReleaseDate(releaseDate time.Time) *Builder {
 		})
 	}
 	b.releaseDate = releaseDate
+	return b
+}
+
+func (b *Builder) WithDescription(description string) *Builder {
+	if description == "" {
+		b.invalidFields = append(b.invalidFields, errors.InvalidField{
+			Name:        messages.AlbumDescription,
+			Description: messages.AlbumDescriptionInvalidErrMsg,
+		})
+	}
+	b.description = &description
+	return b
+}
+
+func (b *Builder) WithImageURL(imageURL string) *Builder {
+	if imageURL == "" {
+		b.invalidFields = append(b.invalidFields, errors.InvalidField{
+			Name:        messages.AlbumImageURL,
+			Description: messages.AlbumImageURLInvalidErrMsg,
+		})
+	}
+	b.imageURL = imageURL
 	return b
 }
 

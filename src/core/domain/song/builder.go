@@ -3,6 +3,7 @@ package song
 import (
 	"module/src/core/errors"
 	"module/src/core/messages"
+	"net/url"
 	"time"
 
 	"github.com/google/uuid"
@@ -78,6 +79,33 @@ func (b *Builder) WithDuration(duration string) *Builder {
 	return b
 }
 
+func (b *Builder) WithLyrics(lyrics string) *Builder {
+	b.lyrics = &lyrics
+	return b
+}
+
+func (b *Builder) WithTrackNumber(trackNumber int) *Builder {
+	if trackNumber <= 0 {
+		b.invalidFields = append(b.invalidFields, errors.InvalidField{
+			Name:        messages.SongTrackNumber,
+			Description: messages.SongTrackNumberInvalidErrMsg,
+		})
+	}
+	b.trackNumber = &trackNumber
+	return b
+}
+
+func (b *Builder) WithSpotifyURL(spotifyURL string) *Builder {
+	if !IsValidURL(spotifyURL) {
+		b.invalidFields = append(b.invalidFields, errors.InvalidField{
+			Name:        messages.SongSpotifyURL,
+			Description: messages.SongSpotifyURLInvalidErrMsg,
+		})
+	}
+	b.spotifyURL = spotifyURL
+	return b
+}
+
 func (b *Builder) Build() (*Song, errors.Error) {
 	if len(b.invalidFields) > 0 {
 		return nil, errors.NewValidationError(messages.SongBuildErr, b.invalidFields...)
@@ -85,6 +113,13 @@ func (b *Builder) Build() (*Song, errors.Error) {
 
 	return &b.Song, nil
 }
+
+func IsValidURL(str string) bool {
+	_, err := url.Parse(str)
+	return err != nil
+}
+
+
 
 func NewBuilder() *Builder {
 	return &Builder{}
