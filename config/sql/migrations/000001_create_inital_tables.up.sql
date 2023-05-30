@@ -8,6 +8,38 @@ create table if not exists role
     code    varchar         not null
 );
 
+create table if not exists country (
+    id uuid not null,
+    name varchar(128) not null,
+    constraint pk_country primary key (id)
+);
+
+create table if not exists state (
+    id uuid not null,
+    name varchar(128) not null,
+    country_id uuid,
+    constraint pk_state primary key (id),
+    constraint fk_state_country_id foreign key (country_id) references country (id)
+);
+
+create table if not exists city (
+    id uuid not null,
+    name varchar(128) not null,
+    state_id uuid,
+    constraint pk_city primary key (id),
+    constraint fk_city_state_id foreign key (state_id) references state (id)
+);
+
+create table if not exists record_company (
+    id uuid not null,
+    name varchar(128) not null,
+    founded_at date not null,
+    website_url varchar(256),
+    country_id uuid,
+    constraint pk_record_company primary key (id),
+    constraint fk_record_company_country_id foreign key (country_id) references country (id)
+);
+
 create table if not exists account
 (
     id          uuid        not null
@@ -18,6 +50,8 @@ create table if not exists account
     email       varchar(64) not null,
     hash        varchar(64) not null,
     password    text        not null,
+    last_login  timestamp   not null,
+    picture_url text        null,
     
     constraint fk_account_role_id
         foreign key (role_id) references role (id)
@@ -25,14 +59,22 @@ create table if not exists account
 
 create table if not exists artist 
 (
-    id              uuid        not null
+    id                  uuid        not null
         constraint pk_artist_id primary key
         constraint df_artist_id default uuid_generate_v4(),
     super_artist_id uuid        null,
-    name            varchar(64) not null,
-    description     text        null,
-    founded_at      date        not null,
-    terminated_at   date        null,
+    name                varchar(64) not null,
+    description         text        null,
+    founded_at          date        not null,
+    terminated_at       date        null,
+    image_url           text        null,
+    record_company_id   uuid      null
+        constraint fk_artist_record_company_id
+            references record_company (id),
+    country_id          uuid        null
+        constraint fk_artist_country_id
+            references country (id),
+    spotify_url         text        null,
 
     constraint fk_artist_super_artist_id
         foreign key (super_artist_id) references artist (id)
@@ -46,6 +88,8 @@ create table if not exists album
     name            varchar(64) not null,
     artist_id       uuid        not null,
     release_date    date        not null,
+    description     text        null,
+    image_url       text        null,
 
     constraint fk_album_artist_id
         foreign key (artist_id) references artist (id)
@@ -60,6 +104,9 @@ create table if not exists song
     album_id        uuid        null,
     release_date    date        not null,
     duration        text        not null,
+    lyrics          text        null,
+    track_number    integer     null,
+    spotify_url     text        null,
 
     constraint fk_song_album_id
         foreign key (album_id) references album (id)
