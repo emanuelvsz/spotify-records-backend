@@ -1,4 +1,12 @@
-copy artist (id, name, super_artist_id, description, founded_at, terminated_at)
+copy country (id, name)
+    from '/sql/sql/migrations/fixtures/000004-country.csv'
+    delimiter ';' csv header;
+
+copy record_company (id, name, founded_at, website_url, country_id)
+    from '/sql/sql/migrations/fixtures/000004-record_company.csv'
+    delimiter ';' csv header;
+
+copy artist (id, name, super_artist_id, description, founded_at, terminated_at, image_url, record_company_id, country_id, spotify_url)
     from '/sql/sql/migrations/fixtures/000002-artist.csv'
     delimiter ';' csv header;
 

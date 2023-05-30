@@ -20,6 +20,10 @@ select a.id as id,
     a.description as description,
     a.founded_at as founded_at,
     a.terminated_at as terminated_at,
+    a.image_url as image_url,
+    a.record_company_id as record_company_id,
+    a.country_id as country_id,
+    a.spotify_url as spotify_url,
     g.name as genre_name,
     g.description as genre_description,
     g.created_at as genre_created_at
@@ -36,6 +40,10 @@ type SelectArtistByIDRow struct {
 	Description      sql.NullString
 	FoundedAt        time.Time
 	TerminatedAt     sql.NullTime
+	ImageUrl         sql.NullString
+	RecordCompanyID  uuid.NullUUID
+	CountryID        uuid.NullUUID
+	SpotifyUrl       sql.NullString
 	GenreName        string
 	GenreDescription sql.NullString
 	GenreCreatedAt   sql.NullTime
@@ -51,6 +59,10 @@ func (q *Queries) SelectArtistByID(ctx context.Context, artistID uuid.UUID) (Sel
 		&i.Description,
 		&i.FoundedAt,
 		&i.TerminatedAt,
+		&i.ImageUrl,
+		&i.RecordCompanyID,
+		&i.CountryID,
+		&i.SpotifyUrl,
 		&i.GenreName,
 		&i.GenreDescription,
 		&i.GenreCreatedAt,
