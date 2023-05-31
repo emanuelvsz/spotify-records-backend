@@ -1,6 +1,7 @@
 package services
 
 import (
+	"module/src/core/domain/album"
 	s "module/src/core/domain/song"
 	"module/src/core/errors"
 	"module/src/core/errors/logger"
@@ -25,6 +26,16 @@ func (a AlbumServices) FetchAlbumSongs(albumID uuid.UUID) ([]s.Song, errors.Erro
 	}
 
 	return songs, nil
+}
+
+func (a AlbumServices) FetchAlbums() ([]album.Album, errors.Error) {
+	albums, err := a.albumRepository.FindAlbums()
+	if err != nil {
+		a.logger.Log(err)
+		return nil, err
+	}
+
+	return albums, nil
 }
 
 func NewAlbumServices(albumRepository repository.AlbumLoader, logger logger.Logger) *AlbumServices {

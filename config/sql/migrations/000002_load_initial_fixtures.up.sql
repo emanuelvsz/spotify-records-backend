@@ -10,7 +10,7 @@ copy artist (id, name, super_artist_id, description, founded_at, terminated_at, 
     from '/sql/sql/migrations/fixtures/000002-artist.csv'
     delimiter ';' csv header;
 
-copy album (id, name, artist_id, release_date)
+copy album (id, name, artist_id, release_date, description, image_url)
     from '/sql/sql/migrations/fixtures/000002-album.csv'
     delimiter ';' csv header;
 

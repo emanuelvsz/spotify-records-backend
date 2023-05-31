@@ -59,23 +59,19 @@ func (b *Builder) WithReleaseDate(releaseDate time.Time) *Builder {
 }
 
 func (b *Builder) WithDescription(description string) *Builder {
-	if description == "" {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.AlbumDescription,
-			Description: messages.AlbumDescriptionInvalidErrMsg,
-		})
-	}
 	b.description = &description
 	return b
 }
 
+// TODO: resolve this. resolve: put data in fixtures
+
 func (b *Builder) WithImageURL(imageURL string) *Builder {
-	if imageURL == "" {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.AlbumImageURL,
-			Description: messages.AlbumImageURLInvalidErrMsg,
-		})
-	}
+	// if imageURL == "" {
+	// 	b.invalidFields = append(b.invalidFields, errors.InvalidField{
+	// 		Name:        messages.AlbumImageURL,
+	// 		Description: messages.AlbumImageURLInvalidErrMsg,
+	// 	})
+	// }
 	b.imageURL = imageURL
 	return b
 }

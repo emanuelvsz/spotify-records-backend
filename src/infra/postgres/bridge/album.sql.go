@@ -55,3 +55,43 @@ func (q *Queries) SelectAlbumSongs(ctx context.Context, albumID uuid.NullUUID) (
 	}
 	return items, nil
 }
+
+const selectAlbums = `-- name: SelectAlbums :many
+select a.id as id,
+    a.name as name,
+    a.artist_id as artist_id,
+    a.release_date as release_date,
+    a.description as description,
+    a.image_url as image_url
+    from album a
+`
+
+func (q *Queries) SelectAlbums(ctx context.Context) ([]Album, error) {
+	rows, err := q.db.QueryContext(ctx, selectAlbums)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Album
+	for rows.Next() {
+		var i Album
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.ArtistID,
+			&i.ReleaseDate,
+			&i.Description,
+			&i.ImageUrl,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
