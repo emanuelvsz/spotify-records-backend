@@ -9,3 +9,7 @@ func GetAuthHandlers() *handlers.AuthHandlers {
 func GetArtistHandlers() *handlers.ArtistHandlers {
 	return handlers.NewArtistHandlers(GetArtistServices())
 }
+
+func GetAlbumHandlers() *handlers.AlbumHandlers {
+	return handlers.NewAlbumHandlers(GetAlbumServices())
+}

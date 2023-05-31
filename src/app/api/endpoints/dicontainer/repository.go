@@ -13,6 +13,9 @@ func GetArtistRepository() repository.ArtistLoader {
 	return postgres.NewArtistPostgresRepository(GetPsqlConnectionManager())
 }
 
+func GetAlbumRepository() repository.AlbumLoader {
+	return postgres.NewAlbumPostgresRepository(GetPsqlConnectionManager())
+}
 
 func GetPsqlConnectionManager() *postgres.DatabaseConnectionManager {
 	return &postgres.DatabaseConnectionManager{}

@@ -85,24 +85,26 @@ func (b *Builder) WithLyrics(lyrics string) *Builder {
 	return b
 }
 
+// TODO: resolve this two functions
+
 func (b *Builder) WithTrackNumber(trackNumber int) *Builder {
-	if trackNumber <= 0 {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.SongTrackNumber,
-			Description: messages.SongTrackNumberInvalidErrMsg,
-		})
-	}
+	// if trackNumber <= 0 {
+	// 	b.invalidFields = append(b.invalidFields, errors.InvalidField{
+	// 		Name:        messages.SongTrackNumber,
+	// 		Description: messages.SongTrackNumberInvalidErrMsg,
+	// 	})
+	// }
 	b.trackNumber = &trackNumber
 	return b
 }
 
 func (b *Builder) WithSpotifyURL(spotifyURL string) *Builder {
-	if !IsValidURL(spotifyURL) {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.SongSpotifyURL,
-			Description: messages.SongSpotifyURLInvalidErrMsg,
-		})
-	}
+	// if !IsValidURL(spotifyURL) {
+	// 	b.invalidFields = append(b.invalidFields, errors.InvalidField{
+	// 		Name:        messages.SongSpotifyURL,
+	// 		Description: messages.SongSpotifyURLInvalidErrMsg,
+	// 	})
+	// }
 	b.spotifyURL = spotifyURL
 	return b
 }

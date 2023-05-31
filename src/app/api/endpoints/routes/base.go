@@ -20,4 +20,5 @@ func New() Router {
 func (instance *router) Load(group *echo.Group) {
 	loadApiRoutes(group)
 	loadArtistRoutes(group)
+	loadAlbumRoutes(group)
 }
