@@ -174,25 +174,32 @@ func (q *Queries) SelectArtists(ctx context.Context) ([]SelectArtistsRow, error)
 const selectSubArtists = `-- name: SelectSubArtists :many
 select a.id as id,
     a.name as name,
-    a.super_artist_id as super_artist_id,
     a.description as description,
     a.founded_at as founded_at,
-    a.terminated_at as terminated_at
-        from artist a
-    where a.super_artist_id = $1
-    order by a.name
+    a.terminated_at as terminated_at,
+    a.image_url as image_url,
+    a.record_company_id as record_company_id,
+    a.country_id as country_id,
+    a.spotify_url as spotify_url
+from artist as a
+join artist_group as ag on a.id = ag.artist_id
+join artist as g on g.id = ag.super_artist_id
+where ag.super_artist_id = $1
 `
 
 type SelectSubArtistsRow struct {
-	ID            uuid.UUID
-	Name          string
-	SuperArtistID uuid.NullUUID
-	Description   sql.NullString
-	FoundedAt     time.Time
-	TerminatedAt  sql.NullTime
+	ID              uuid.UUID
+	Name            string
+	Description     sql.NullString
+	FoundedAt       time.Time
+	TerminatedAt    sql.NullTime
+	ImageUrl        sql.NullString
+	RecordCompanyID uuid.NullUUID
+	CountryID       uuid.NullUUID
+	SpotifyUrl      sql.NullString
 }
 
-func (q *Queries) SelectSubArtists(ctx context.Context, superArtistID uuid.NullUUID) ([]SelectSubArtistsRow, error) {
+func (q *Queries) SelectSubArtists(ctx context.Context, superArtistID uuid.UUID) ([]SelectSubArtistsRow, error) {
 	rows, err := q.db.QueryContext(ctx, selectSubArtists, superArtistID)
 	if err != nil {
 		return nil, err
@@ -204,10 +211,13 @@ func (q *Queries) SelectSubArtists(ctx context.Context, superArtistID uuid.NullU
 		if err := rows.Scan(
 			&i.ID,
 			&i.Name,
-			&i.SuperArtistID,
 			&i.Description,
 			&i.FoundedAt,
 			&i.TerminatedAt,
+			&i.ImageUrl,
+			&i.RecordCompanyID,
+			&i.CountryID,
+			&i.SpotifyUrl,
 		); err != nil {
 			return nil, err
 		}

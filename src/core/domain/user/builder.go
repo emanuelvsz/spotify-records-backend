@@ -1,6 +1,7 @@
 package user
 
 import (
+	"module/src/core/domain"
 	"module/src/core/errors"
 	"module/src/core/messages"
 	"strings"
@@ -99,8 +100,8 @@ func (b *Builder) WithEmail(email string) *Builder {
 }
 
 func (b *Builder) Build() (*User, errors.Error) {
-
 	if len(b.invalidFields) > 0 {
+		domain.ShowInvalidFields(b.invalidFields)
 		return nil, errors.NewValidationError(messages.UserBuildErr, b.invalidFields...)
 	}
 

@@ -1,6 +1,7 @@
 package artist
 
 import (
+	"module/src/core/domain"
 	"module/src/core/errors"
 	"module/src/core/messages"
 	"time"
@@ -35,25 +36,13 @@ func (b *Builder) WithName(name string) *Builder {
 	return b
 }
 
-func (b *Builder) WithSuperArtistID(superArtistID uuid.UUID) *Builder {
-	if superArtistID == uuid.Nil {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistSuperArtistID,
-			Description: messages.ArtistSuperArtistIDInvalidErrMsg,
-		})
-	}
-	b.superArtistID = &superArtistID
+func (b *Builder) WithSuperArtistID(superArtistID *uuid.UUID) *Builder {
+	b.superArtistID = superArtistID
 	return b
 }
 
-func (b *Builder) WithDescription(description string) *Builder {
-	if description == "" {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistDescription,
-			Description: messages.ArtistDescriptionInvalidErrMsg,
-		})
-	}
-	b.description = &description
+func (b *Builder) WithDescription(description *string) *Builder {
+	b.description = description
 	return b
 }
 
@@ -69,12 +58,6 @@ func (b *Builder) WithFoundedAt(foundedAt time.Time) *Builder {
 }
 
 func (b *Builder) WithTerminatedAt(terminatedAt *time.Time) *Builder {
-	if terminatedAt != nil && terminatedAt.Before(b.foundedAt) {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistTerminatedAt,
-			Description: messages.ArtistTerminatedAtInvalidErrMsg,
-		})
-	}
 	b.terminatedAt = terminatedAt
 	return b
 }
@@ -84,52 +67,30 @@ func (b *Builder) WithSubArtists(subArtists []Artist) *Builder {
 	return b
 }
 
-func (b *Builder) WithImageURL(imageURL string) *Builder {
-	if imageURL == "" {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistImageURL,
-			Description: messages.ArtistImageURLInvalidErrMsg,
-		})
-	}
-	b.imageURL = &imageURL
+func (b *Builder) WithImageURL(imageURL *string) *Builder {
+	b.imageURL = imageURL
 	return b
 }
 
-func (b *Builder) WithRecordCompanyID(recordCompanyID uuid.UUID) *Builder {
-	if recordCompanyID == uuid.Nil {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistRecordCompanyID,
-			Description: messages.ArtistRecordCompanyIDInvalidErrMsg,
-		})
-	}
-	b.recordCompanyID = &recordCompanyID
+func (b *Builder) WithRecordCompanyID(recordCompanyID *uuid.UUID) *Builder {
+	b.recordCompanyID = recordCompanyID
 	return b
 }
 
-func (b *Builder) WithCountryID(countryID uuid.UUID) *Builder {
-	if countryID == uuid.Nil {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistCountryID,
-			Description: messages.ArtistCountryIDInvalidErrMsg,
-		})
-	}
-	b.countryID = &countryID
+func (b *Builder) WithCountryID(countryID *uuid.UUID) *Builder {
+	b.countryID = countryID
 	return b
 }
 
-func (b *Builder) WithSpotifyURL(spotifyURL string) *Builder {
-	if spotifyURL == "" {
-		b.invalidFields = append(b.invalidFields, errors.InvalidField{
-			Name:        messages.ArtistSpotifyURL,
-			Description: messages.ArtistSpotifyURLInvalidErrMsg,
-		})
-	}
+func (b *Builder) WithSpotifyURL(spotifyURL *string) *Builder {
+
 	b.spotifyURL = spotifyURL
 	return b
 }
 
 func (b *Builder) Build() (*Artist, errors.Error) {
 	if len(b.invalidFields) > 0 {
+		domain.ShowInvalidFields(b.invalidFields)
 		return nil, errors.NewValidationError(messages.ArtistBuildErr, b.invalidFields...)
 	}
 

@@ -1,5 +1,3 @@
-
-
 create table if not exists reset_password (
     account_id uuid not null,
     email varchar(64) not null,

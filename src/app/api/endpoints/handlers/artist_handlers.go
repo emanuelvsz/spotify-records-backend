@@ -98,9 +98,9 @@ func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
 // @Summary Buscar os dados de um artista por id
 // @Tags Rotas do usuário
 // @Description Rota que permite que se busque as informações de um artista
-// @Param artistID path string true "ID do artista." default(cfd8b073-a303-4886-836a-f249e88be9bc)
+// @Param artistID path string true "ID do artista." default(a6d6488b-6ed0-4d41-9c55-4e899fdd7e47)
 // @Produce json
-// @Success 200 {array} response.ArtistDTO "Requisição realizada com sucesso."
+// @Success 200 {array} response.ArtistLowDTO "Requisição realizada com sucesso."
 // @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
 // @Failure 403 {object} response.ErrorMessage "Acesso negado."
 // @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
@@ -108,17 +108,55 @@ func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
 // @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
 // @Router /artists/{artistID} [get]
 func (h ArtistHandlers) GetArtistInformation(context echo.Context) error {
-	artistID, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
+	artistIDParam, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
 		messages.ArtistIDInvalidErrMsg, messages.ConversionErrorMessage)
 	if conversionErr != nil {
 		return getHttpHandledErrorResponse(context, conversionErr)
 	}
 
-	artist, fetchErr := h.service.FetchArtistInformation(*artistID)
+	artist, fetchErr := h.service.FetchArtistInformation(*artistIDParam)
 	if fetchErr != nil {
 		return getHttpHandledErrorResponse(context, fetchErr)
 	}
-	artistDTO := response.NewArtistDTO(artist.ID(), artist.Name(), artist.SuperArtistID(), artist.Description(), artist.FoundedAt(), artist.TerminatedAt(), nil)
+
+	subArtists := make([]response.ArtistDTO, 0)
+	for _, each := range artist.SubArtists() {
+		artistDTO := response.NewArtistDTO(
+			each.ID(),
+			each.Name(),
+			each.SuperArtistID(),
+			each.Description(),
+			each.FoundedAt(),
+			each.TerminatedAt(),
+			nil,
+		)
+
+		subArtists = append(subArtists, *artistDTO)
+	}
+
+	recordComID := artist.RecordCompanyID()
+	if *recordComID == uuid.Nil {
+		recordComID = nil
+	}
+
+	countryID := artist.CountryID()
+	if *countryID == uuid.Nil {
+		countryID = nil
+	}
+
+	artistDTO := response.NewArtistLowDTO(
+		artist.ID(),
+		artist.Name(),
+		artist.SuperArtistID(),
+		artist.Description(),
+		artist.FoundedAt(),
+		artist.TerminatedAt(),
+		subArtists,
+		artist.ImageURL(),
+		recordComID,
+		countryID,
+		*artist.SpotifyURL(),
+	)
 
 	return context.JSON(http.StatusOK, artistDTO)
 }

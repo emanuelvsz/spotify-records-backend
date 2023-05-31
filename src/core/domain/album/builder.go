@@ -1,6 +1,7 @@
 package album
 
 import (
+	"module/src/core/domain"
 	"module/src/core/errors"
 	"module/src/core/messages"
 	"time"
@@ -81,6 +82,7 @@ func (b *Builder) WithImageURL(imageURL string) *Builder {
 
 func (b *Builder) Build() (*Album, errors.Error) {
 	if len(b.invalidFields) > 0 {
+		domain.ShowInvalidFields(b.invalidFields)
 		return nil, errors.NewValidationError(messages.AlbumBuildErr, b.invalidFields...)
 	}
 

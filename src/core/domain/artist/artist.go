@@ -17,7 +17,7 @@ type Artist struct {
 	imageURL        *string
 	recordCompanyID *uuid.UUID
 	countryID       *uuid.UUID
-	spotifyURL      string
+	spotifyURL      *string
 }
 
 func (a Artist) ID() uuid.UUID {
@@ -60,6 +60,6 @@ func (a Artist) CountryID() *uuid.UUID {
 	return a.countryID
 }
 
-func (a Artist) SpotifyURL() string {
+func (a Artist) SpotifyURL() *string {
 	return a.spotifyURL
 }

@@ -56,6 +56,15 @@ type ArtistGenre struct {
 	GenreID  uuid.UUID
 }
 
+type ArtistGroup struct {
+	ID            uuid.UUID
+	ArtistID      uuid.UUID
+	SuperArtistID uuid.UUID
+	JoinedAt      time.Time
+	LeftAt        sql.NullTime
+	IsActive      bool
+}
+
 type ArtistNews struct {
 	NewsID   uuid.UUID
 	ArtistID uuid.UUID

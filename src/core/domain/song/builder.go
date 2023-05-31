@@ -1,6 +1,7 @@
 package song
 
 import (
+	"module/src/core/domain"
 	"module/src/core/errors"
 	"module/src/core/messages"
 	"net/url"
@@ -108,6 +109,7 @@ func (b *Builder) WithSpotifyURL(spotifyURL string) *Builder {
 
 func (b *Builder) Build() (*Song, errors.Error) {
 	if len(b.invalidFields) > 0 {
+		domain.ShowInvalidFields(b.invalidFields)
 		return nil, errors.NewValidationError(messages.SongBuildErr, b.invalidFields...)
 	}
 
@@ -118,8 +120,6 @@ func IsValidURL(str string) bool {
 	_, err := url.Parse(str)
 	return err != nil
 }
-
-
 
 func NewBuilder() *Builder {
 	return &Builder{}

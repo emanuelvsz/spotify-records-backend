@@ -79,7 +79,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "default": "cfd8b073-a303-4886-836a-f249e88be9bc",
+                        "default": "a6d6488b-6ed0-4d41-9c55-4e899fdd7e47",
                         "description": "ID do artista.",
                         "name": "artistID",
                         "in": "path",
@@ -92,7 +92,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.ArtistDTO"
+                                "$ref": "#/definitions/response.ArtistLowDTO"
                             }
                         }
                     },
@@ -268,6 +268,47 @@
                     }
                 },
                 "name": {
+                    "type": "string"
+                },
+                "super_artist_id": {
+                    "type": "string"
+                },
+                "terminated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ArtistLowDTO": {
+            "type": "object",
+            "properties": {
+                "country_id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "founded_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.ArtistDTO"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "picture_url": {
+                    "type": "string"
+                },
+                "record_company_id": {
+                    "type": "string"
+                },
+                "spotify_url": {
                     "type": "string"
                 },
                 "super_artist_id": {
