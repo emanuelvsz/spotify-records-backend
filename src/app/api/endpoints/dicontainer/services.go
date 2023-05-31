@@ -14,6 +14,10 @@ func GetArtistServices() primary.ArtistManager {
 	return services.NewArtistServices(GetArtistRepository(), GetLogger())
 }
 
+func GetAlbumServices() primary.AlbumManager {
+	return services.NewAlbumServices(GetAlbumRepository(), GetLogger())
+}
+
 func GetLogger() logger.Logger {
 	return logger.New()
 }

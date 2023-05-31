@@ -19,6 +19,70 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/albums/{albumID}/songs": {
+            "get": {
+                "description": "Rota que permite que se busque todas as músicas de um album",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rotas do usuário"
+                ],
+                "summary": "Buscar todas as músicas de um album específico",
+                "operationId": "GetAlbumSongs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "4d1035ba-22b7-4139-baff-c02861e4c6ec",
+                        "description": "ID do album.",
+                        "name": "albumID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição realizada com sucesso.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.SongDTO"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso negado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Algum dado informado não pôde ser processado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro inesperado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "A base de dados não está disponível.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/artists": {
             "get": {
                 "description": "Rota que permite que se busque todos os artistas do banco",
