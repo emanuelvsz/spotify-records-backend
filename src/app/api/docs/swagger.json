@@ -11,6 +11,60 @@
     },
     "basePath": "/api",
     "paths": {
+        "/albums": {
+            "get": {
+                "description": "Rota que permite que se busque todos os albuns",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rotas do usuário"
+                ],
+                "summary": "Buscar todos os albuns",
+                "operationId": "GetAlbums",
+                "responses": {
+                    "200": {
+                        "description": "Requisição realizada com sucesso.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.AlbumDTO"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Acesso negado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Algum dado informado não pôde ser processado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro inesperado.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "A base de dados não está disponível.",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/albums/{albumID}/songs": {
             "get": {
                 "description": "Rota que permite que se busque todas as músicas de um album",
@@ -313,6 +367,29 @@
         }
     },
     "definitions": {
+        "response.AlbumDTO": {
+            "type": "object",
+            "properties": {
+                "artistId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                }
+            }
+        },
         "response.ArtistDTO": {
             "type": "object",
             "properties": {
