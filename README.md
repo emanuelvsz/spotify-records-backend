@@ -8,7 +8,7 @@
  <a href="#desc"><li>Description</li></a>
  <a href="#prototype"><li>Prototype</li></a>
  <a href="#author"><li>Author</li></a>
-
+ <a href="how-init"><li>How init the api?</li></a>
 </ul>
 
 </section>
@@ -17,9 +17,9 @@
 
 ## Description:
 
-``Spotify Records`` it is a wiki about all the artists on the Spotify platform, there, the user can connect with his Spotify Music account and after that, the most diverse information about his favorite artists will be shown. on the site, it is also possible to stay on top of news about your favorite artists, in addition to closely monitoring their upcoming presentations and releases
+``Spotify Records`` it is a wiki about all the artists on the Spotify platform, there, the user can connect with his Spotify Music account and after that, the most diverse information about his favorite artists will be shown. On the site, it is also possible to stay on top of news about your favorite artists, in addition to closely monitoring their upcoming presentations and releases. Also, exclusive information of the artist content will be shown
 
-The back-end of the project will be a REST API that will provide the database data for the front-end. The code is made of ``golang`` and using hexagonal architecture for better security and code organization.
+The back-end of the project will be a REST API that will provide the database data for the front-end. The code is made of ``golang`` and using hexagonal architecture for better security and code organization. 
 
 The front-end will be developed in ``React`` with some possible libraries to improve the performance and operation of the application
 
@@ -38,7 +38,32 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 
 <a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here to see the design in a better resolution</a>
 
-</section>
+</section>How init the api?<section id="how-init">
+
+### Clone the project 
+ 
+```
+git clone https://github.com/emanuelvsz/spotify-records-backend
+cd spotify-records-backend
+```
+
+### <section id="como-rodar-o-projeto"></section>How run the project?
+
+1. Abra seu ambiente de desenvolvimento (<a href="https://code.visualstudio.com/download">VS Code</a>, <a href="https://www.jetbrains.com/go/promo/?source=google&medium=cpc&campaign=10156130867&term=goland&content=438684701890&gad=1&gclid=Cj0KCQjwmN2iBhCrARIsAG_G2i7Tsx5AtYXU8TlqWbu6rqD6AO_C6sJs4C8plkJPbA0HNRWExrQFFmgaAhIlEALw_wcB">Goland</a> e etc.)
+2. Open a ``terminal linux``
+3. Verify if the dependencies listed up are sucessful installed
+4. Run ``docker``
+5. Open the directory: ``cd spotify-records-backend``
+6. Inside the project, execute the command ``cd config/docker`` to enter the directory where the docker settings are running
+7. Run the command: ``docker compose rm -sf && docker compose up --build`` to run the spotify records container. Volte para o caminho padrão do projeto com o comando ``cd ../..``
+9. Execute o comando ``go mod tidy``
+10. Run the command ``bash -c "cd src/app/api && swag init -g ../../main.go --output ./docs --dir ./endpoints/handlers"
+`` to generate the API swagger documentation
+11. Run the server ``go run ./src/app/api``
+
+### <section id="how-to-access-route-documentation"></section>How to access route documentation?
+ 
+After running the server locally, the route documentation can be accessed at the following address: `http://localhost:8000/api/docs/index.html#/`.
 
 <section name"author" id="author">
 
