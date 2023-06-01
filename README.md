@@ -8,7 +8,7 @@
  <a href="#desc"><li>Description</li></a>
  <a href="#prototype"><li>Prototype</li></a>
  <a href="#author"><li>Author</li></a>
- <a href="how-init"><li>How init the api?</li></a>
+ <a href="#how-init"><li>How init the api?</li></a>
 </ul>
 
 </section>
