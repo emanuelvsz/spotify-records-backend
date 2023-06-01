@@ -32,13 +32,23 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 #### Home page
 <img src="https://user-images.githubusercontent.com/84058517/226115550-bb4d1f5b-7513-4dd5-ba9b-ef4421cfd424.png" width=560/>
 
-#### About the artist page
+About the artist page
 
 <img src="https://user-images.githubusercontent.com/84058517/226115645-7ef8dfa4-8609-4d6e-aa05-56b3b9d3b8aa.png" width=560/>
 
 <a href="https://www.figma.com/file/MObQo3CpTAPbX2fPYZ6BeI/Spotify-Records?node-id=0%3A1&t=9kqFiWsBJ8W3ne76-1">click here to see the design in a better resolution</a>
 
-</section>How init the api?<section id="how-init">
+<section id="how-init"></section>
+
+### <section id="what-are-the-necessary-tools"></section>Necessary tools
+
+- IDE of your choice
+- Ubuntu Terminal <a href="https://learn.microsoft.com/en-us/windows/wsl/install">how to install?</a>
+- Golang <a href="https://go.dev/doc/">how to install?</a>
+- Migrate <a href="https://pkg.go.dev/github.com/golang-migrate/migrate/v4">how to install?</a>
+- Sqlc <a href="https://docs.sqlc.dev/en/latest/overview/install.html">how to install?</a>
+- Docker <a href="https://docs.docker.com/engine/install">how to install?</a>
+- Swagger <a href="https://github.com/swaggo/swag">how to install?</a>
 
 ### Clone the project 
  
