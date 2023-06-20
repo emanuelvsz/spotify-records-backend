@@ -29,7 +29,8 @@ The front-end will be developed in ``React`` with some possible libraries to imp
 
 ## Diagrams:
 
-Entity-Relashionship Model:
+#### Entity-Relashionship Model:
+
 ![SR Backend - Diagrama ER de banco de dados (pé de galinha)](https://github.com/emanuelvsz/spotify-records-backend/assets/84058517/e6c0f658-0771-42d0-b4e0-a9bb97c2d8d7)
 
 ## Prototype:
