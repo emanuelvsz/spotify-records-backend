@@ -106,7 +106,47 @@ info:
   title: SPOTIFY RECORDS API
   version: "1.0"
 paths:
-  /albums:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: "Rota que permite que um usuário se autentique no sistema utilizando
+        seu endereço de e-mail e senha.\n| E-mail              | Senha     | Função
+        \                                                           |\n|---------------------|-----------|-------------------------------------------------------------------|\n|
+        admin@ifal.edu.br   | Test1234! | Usuário comum do sistema\t\t\t\t\t\t\t\t\t\t
+        \ |"
+      operationId: Login
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Requisição mal formulada.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "401":
+          description: Usuário não autorizado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "403":
+          description: Acesso negado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "422":
+          description: Algum dado informado não pôde ser processado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "500":
+          description: Ocorreu um erro inesperado.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+        "503":
+          description: A base de dados não está disponível.
+          schema:
+            $ref: '#/definitions/response.ErrorMessage'
+      summary: Fazer login no sistema
+      tags:
+      - Rotas de autenticação
+  /user/albums:
     get:
       description: Rota que permite que se busque todos os albuns
       operationId: GetAlbums
@@ -142,7 +182,7 @@ paths:
       summary: Buscar todos os albuns
       tags:
       - Rotas do usuário
-  /albums/{albumID}/songs:
+  /user/albums/{albumID}/songs:
     get:
       description: Rota que permite que se busque todas as músicas de um album
       operationId: GetAlbumSongs
@@ -185,7 +225,7 @@ paths:
       summary: Buscar todas as músicas de um album específico
       tags:
       - Rotas do usuário
-  /artists:
+  /user/artists:
     get:
       description: Rota que permite que se busque todos os artistas do banco
       operationId: GetArtists
@@ -221,7 +261,7 @@ paths:
       summary: Buscar todos os artistas do banco
       tags:
       - Rotas do usuário
-  /artists/{artistID}:
+  /user/artists/{artistID}:
     get:
       description: Rota que permite que se busque as informações de um artista
       operationId: GetArtistInformation
@@ -264,7 +304,7 @@ paths:
       summary: Buscar os dados de um artista por id
       tags:
       - Rotas do usuário
-  /artists/{artistID}/songs:
+  /user/artists/{artistID}/songs:
     get:
       description: Rota que permite que se busque todas as músicas de um artista
       operationId: GetArtistSongs
@@ -307,46 +347,6 @@ paths:
       summary: Buscar todas as músicas de um artista específico
       tags:
       - Rotas do usuário
-  /auth/login:
-    post:
-      consumes:
-      - application/json
-      description: "Rota que permite que um usuário se autentique no sistema utilizando
-        seu endereço de e-mail e senha.\n| E-mail              | Senha     | Função
-        \                                                           |\n|---------------------|-----------|-------------------------------------------------------------------|\n|
-        admin@ifal.edu.br   | Test1234! | Usuário comum do sistema\t\t\t\t\t\t\t\t\t\t
-        \ |"
-      operationId: Login
-      produces:
-      - application/json
-      responses:
-        "400":
-          description: Requisição mal formulada.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-        "401":
-          description: Usuário não autorizado.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-        "403":
-          description: Acesso negado.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-        "422":
-          description: Algum dado informado não pôde ser processado.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-        "500":
-          description: Ocorreu um erro inesperado.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-        "503":
-          description: A base de dados não está disponível.
-          schema:
-            $ref: '#/definitions/response.ErrorMessage'
-      summary: Fazer login no sistema
-      tags:
-      - Rotas de autenticação
 securityDefinitions:
   bearerAuth:
     in: header

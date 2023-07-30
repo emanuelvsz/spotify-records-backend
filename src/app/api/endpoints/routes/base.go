@@ -2,7 +2,7 @@ package routes
 
 import (
 	_ "module/src/app/api/docs"
-
+	"module/src/app/api/endpoints/routes/users"
 	"github.com/labstack/echo/v4"
 )
 
@@ -19,6 +19,5 @@ func New() Router {
 
 func (instance *router) Load(group *echo.Group) {
 	loadApiRoutes(group)
-	loadArtistRoutes(group)
-	loadAlbumRoutes(group)
+	users.LoadUserRoutes(group)
 }

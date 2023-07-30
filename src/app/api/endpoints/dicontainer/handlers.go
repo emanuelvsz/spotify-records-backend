@@ -6,10 +6,6 @@ func GetAuthHandlers() *handlers.AuthHandlers {
 	return handlers.NewAuthHandlers(GetAuthServices())
 }
 
-func GetArtistHandlers() *handlers.ArtistHandlers {
-	return handlers.NewArtistHandlers(GetArtistServices())
-}
-
-func GetAlbumHandlers() *handlers.AlbumHandlers {
-	return handlers.NewAlbumHandlers(GetAlbumServices())
+func GetUserHandlers() *handlers.UserHandlers {
+	return handlers.NewUserHandlers(GetUserServices())
 }

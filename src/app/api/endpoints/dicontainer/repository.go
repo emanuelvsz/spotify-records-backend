@@ -9,12 +9,8 @@ func GetAuthRepository() repository.AuthLoader {
 	return postgres.NewAuthPostgresRepository(GetPsqlConnectionManager())
 }
 
-func GetArtistRepository() repository.ArtistLoader {
-	return postgres.NewArtistPostgresRepository(GetPsqlConnectionManager())
-}
-
-func GetAlbumRepository() repository.AlbumLoader {
-	return postgres.NewAlbumPostgresRepository(GetPsqlConnectionManager())
+func GetUserRepository() repository.UserLoader {
+	return postgres.NewUserPostgresRepository(GetPsqlConnectionManager())
 }
 
 func GetPsqlConnectionManager() *postgres.DatabaseConnectionManager {

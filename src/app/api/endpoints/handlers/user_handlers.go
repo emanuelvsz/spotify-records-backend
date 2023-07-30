@@ -11,13 +11,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type ArtistHandlers struct {
-	service primary.ArtistManager
-}
-
 const (
+	albumID  = "albumID"
 	artistID = "artistID"
+	songID   = "songID"
 )
+
+type UserHandlers struct {
+	service primary.UserManager
+}
 
 // GetArtists
 // @ID GetArtists
@@ -31,8 +33,8 @@ const (
 // @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
 // @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
 // @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
-// @Router /artists [get]
-func (h ArtistHandlers) GetArtists(context echo.Context) error {
+// @Router /user/artists [get]
+func (h UserHandlers) GetArtists(context echo.Context) error {
 	artistsSlice, fetchErr := h.service.FetchArtists()
 	if fetchErr != nil {
 		return getHttpHandledErrorResponse(context, fetchErr)
@@ -71,8 +73,8 @@ func (h ArtistHandlers) GetArtists(context echo.Context) error {
 // @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
 // @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
 // @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
-// @Router /artists/{artistID}/songs [get]
-func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
+// @Router /user/artists/{artistID}/songs [get]
+func (h UserHandlers) GetArtistSongs(context echo.Context) error {
 	artistID, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
 		messages.ArtistIDInvalidErrMsg, messages.ConversionErrorMessage)
 	if conversionErr != nil {
@@ -106,8 +108,8 @@ func (h ArtistHandlers) GetArtistSongs(context echo.Context) error {
 // @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
 // @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
 // @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
-// @Router /artists/{artistID} [get]
-func (h ArtistHandlers) GetArtistInformation(context echo.Context) error {
+// @Router /user/artists/{artistID} [get]
+func (h UserHandlers) GetArtistInformation(context echo.Context) error {
 	artistIDParam, conversionErr := converters.ConvertFromStringToUUID(context.Param(artistID), messages.ArtistID,
 		messages.ArtistIDInvalidErrMsg, messages.ConversionErrorMessage)
 	if conversionErr != nil {
@@ -161,6 +163,89 @@ func (h ArtistHandlers) GetArtistInformation(context echo.Context) error {
 	return context.JSON(http.StatusOK, artistDTO)
 }
 
-func NewArtistHandlers(service primary.ArtistManager) *ArtistHandlers {
-	return &ArtistHandlers{service: service}
+// GetAlbumSongs
+// @ID GetAlbumSongs
+// @Summary Buscar todas as músicas de um album específico
+// @Tags Rotas do usuário
+// @Description Rota que permite que se busque todas as músicas de um album
+// @Param albumID path string true "ID do album." default(4d1035ba-22b7-4139-baff-c02861e4c6ec)
+// @Produce json
+// @Success 200 {array} response.SongDTO "Requisição realizada com sucesso."
+// @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
+// @Failure 403 {object} response.ErrorMessage "Acesso negado."
+// @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
+// @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
+// @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
+// @Router /user/albums/{albumID}/songs [get]
+func (h UserHandlers) GetAlbumSongs(context echo.Context) error {
+	albumID, conversionErr := converters.ConvertFromStringToUUID(context.Param(albumID), messages.AlbumID,
+		messages.AlbumIDInvalidErrMsg, messages.ConversionErrorMessage)
+	if conversionErr != nil {
+		return getHttpHandledErrorResponse(context, conversionErr)
+	}
+
+	songsRow, fetchErr := h.service.FetchAlbumSongs(*albumID)
+	if fetchErr != nil {
+		return getHttpHandledErrorResponse(context, fetchErr)
+	}
+
+	var songs []response.SongHighDTO
+	for _, each := range songsRow {
+		url := each.SpotifyURL()
+
+		songBuilder := response.NewSongHighDTO(
+			each.ID(),
+			each.Name(),
+			each.AlbumID(),
+			each.ReleaseDate(),
+			each.Duration(),
+			each.Lyrics(),
+			&url,
+			each.TrackNumber(),
+		)
+		songs = append(songs, *songBuilder)
+	}
+
+	return context.JSON(http.StatusOK, songs)
+}
+
+// GetAlbums
+// @ID GetAlbums
+// @Summary Buscar todos os albuns
+// @Tags Rotas do usuário
+// @Description Rota que permite que se busque todos os albuns
+// @Produce json
+// @Success 200 {array} response.AlbumDTO "Requisição realizada com sucesso."
+// @Failure 401 {object} response.ErrorMessage "Usuário não autorizado."
+// @Failure 403 {object} response.ErrorMessage "Acesso negado."
+// @Failure 422 {object} response.ErrorMessage "Algum dado informado não pôde ser processado."
+// @Failure 500 {object} response.ErrorMessage "Ocorreu um erro inesperado."
+// @Failure 503 {object} response.ErrorMessage "A base de dados não está disponível."
+// @Router /user/albums [get]
+func (h UserHandlers) GetAlbums(context echo.Context) error {
+	albumsRow, fetchErr := h.service.FetchAlbums()
+	if fetchErr != nil {
+		return getHttpHandledErrorResponse(context, fetchErr)
+	}
+
+	var albums []response.AlbumDTO
+	for _, each := range albumsRow {
+		url := each.ImageURL()
+		albumBuilder := response.NewAlbumDTO(
+			each.ID(),
+			each.Name(),
+			each.ArtistID(),
+			each.ReleaseDate(),
+			each.Description(),
+			&url,
+		)
+
+		albums = append(albums, *albumBuilder)
+	}
+
+	return context.JSON(http.StatusOK, albums)
+}
+
+func NewUserHandlers(service primary.UserManager) *UserHandlers {
+	return &UserHandlers{service: service}
 }

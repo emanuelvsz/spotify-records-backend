@@ -10,12 +10,8 @@ func GetAuthServices() primary.AuthManager {
 	return services.NewAuthServices(GetAuthRepository(), GetLogger())
 }
 
-func GetArtistServices() primary.ArtistManager {
-	return services.NewArtistServices(GetArtistRepository(), GetLogger())
-}
-
-func GetAlbumServices() primary.AlbumManager {
-	return services.NewAlbumServices(GetAlbumRepository(), GetLogger())
+func GetUserServices() primary.UserManager {
+	return services.NewUserServices(GetUserRepository(), GetLogger())
 }
 
 func GetLogger() logger.Logger {
