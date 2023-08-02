@@ -67,7 +67,7 @@ cd spotify-records-backend
 
 ### <section id="como-rodar-o-projeto"></section>How run the project?
 
-1. Abra seu ambiente de desenvolvimento (<a href="https://code.visualstudio.com/download">VS Code</a>, <a href="https://www.jetbrains.com/go/promo/?source=google&medium=cpc&campaign=10156130867&term=goland&content=438684701890&gad=1&gclid=Cj0KCQjwmN2iBhCrARIsAG_G2i7Tsx5AtYXU8TlqWbu6rqD6AO_C6sJs4C8plkJPbA0HNRWExrQFFmgaAhIlEALw_wcB">Goland</a> e etc.)
+1. Open your development environment (<a href="https://code.visualstudio.com/download">VS Code</a>, <a href="https://www.jetbrains.com/go/promo/?source=google&medium=cpc&campaign=10156130867&term=goland&content=438684701890&gad=1&gclid=Cj0KCQjwmN2iBhCrARIsAG_G2i7Tsx5AtYXU8TlqWbu6rqD6AO_C6sJs4C8plkJPbA0HNRWExrQFFmgaAhIlEALw_wcB">Goland</a> e etc.)
 2. Open a ``terminal linux``
 3. Verify if the dependencies listed up are sucessful installed
 4. Run ``docker``
